@@ -6,9 +6,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_manaus.mk
+    $(LOCAL_DIR)/twrp_manaus.mk
 
 COMMON_LUNCH_CHOICES := \
-    omni_manaus-user \
-    omni_manaus-userdebug \
-    omni_manaus-eng
+    twrp_manaus-user \
+    twrp_manaus-userdebug \
+    twrp_manaus-eng

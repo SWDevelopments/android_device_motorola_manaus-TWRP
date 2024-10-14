@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-add_lunch_combo omni_manaus-user
-add_lunch_combo omni_manaus-userdebug
-add_lunch_combo omni_manaus-eng
+add_lunch_combo twrp_manaus-user
+add_lunch_combo twrp_manaus-userdebug
+add_lunch_combo twrp_manaus-eng
+export LC_ALL=C
