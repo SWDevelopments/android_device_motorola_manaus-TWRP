@@ -6,6 +6,7 @@
 #
 
 LOCAL_PATH := device/motorola/manaus
+
 # A/B
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -18,14 +19,16 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-impl \
     android.hardware.boot@1.0-service
 
+# Add boot control shared library
 PRODUCT_PACKAGES += \
     bootctrl.mt6879
 
-PRODUCT_STATIC_BOOT_CONTROL_HAL := \
-    bootctrl.mt6879 \
-    libgptutils \
-    libz \
-    libcutils
+# Remove obsolete static boot control HAL
+# PRODUCT_STATIC_BOOT_CONTROL_HAL := \
+#     bootctrl.mt6879 \
+#     libgptutils \
+#     libz \
+#     libcutils
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
