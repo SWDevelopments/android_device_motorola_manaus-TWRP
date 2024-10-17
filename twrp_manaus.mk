@@ -15,6 +15,9 @@ $(call inherit-product, vendor/twrp/config/common.mk)
 # Inherit from manaus device
 $(call inherit-product, device/motorola/manaus/device.mk)
 
+# Inherit common product files.
+$(call inherit-product, vendor/pb/config/common.mk)
+
 PRODUCT_DEVICE := manaus
 PRODUCT_NAME := twrp_manaus
 PRODUCT_BRAND := motorola
