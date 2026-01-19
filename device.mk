@@ -6,6 +6,7 @@
 #
 
 LOCAL_PATH := device/motorola/manaus
+
 # A/B
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -21,11 +22,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     bootctrl.mt6879
 
-PRODUCT_STATIC_BOOT_CONTROL_HAL := \
-    bootctrl.mt6879 \
-    libgptutils \
-    libz \
-    libcutils
+# --- DELETED LINES 29-33 (PRODUCT_STATIC_BOOT_CONTROL_HAL) ---
+# The libraries 'bootctrl.mt6879', 'libgptutils', 'libz', and 'libcutils' 
+# are now handled automatically by the shared library dependency linked above.
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
