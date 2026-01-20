@@ -20,11 +20,9 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-service
 
 PRODUCT_PACKAGES += \
-    bootctrl.mt6879
-
-# --- DELETED LINES 29-33 (PRODUCT_STATIC_BOOT_CONTROL_HAL) ---
-# The libraries 'bootctrl.mt6879', 'libgptutils', 'libz', and 'libcutils' 
-# are now handled automatically by the shared library dependency linked above.
+    bootctrl.mt6879 \
+    libgptutils
+    
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
