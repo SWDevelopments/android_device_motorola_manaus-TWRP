@@ -7,8 +7,9 @@
 
 DEVICE_PATH := device/motorola/manaus
 
-# For building with minimal manifest
+# Building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
+BUILD_BROKEN_DUP_RULES := true
 
 # A/B
 AB_OTA_UPDATER := true
