@@ -6,6 +6,7 @@
 #
 
 LOCAL_PATH := device/motorola/manaus
+
 # A/B
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -13,23 +14,24 @@ AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
 
-# Boot control HAL
+# Boot control HAL (use 1.2 for Android 13+)
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.0-impl \
-    android.hardware.boot@1.0-service
-
-PRODUCT_PACKAGES += \
-    bootctrl.mt6879
-
-PRODUCT_STATIC_BOOT_CONTROL_HAL := \
+    android.hardware.boot@1.2-service \
+    android.hardware.boot@1.2-impl \
     bootctrl.mt6879 \
-    libgptutils \
-    libz \
-    libcutils
-
-PRODUCT_PACKAGES += \
+    bootctrl \
     otapreopt_script \
     cppreopts.sh \
     update_engine \
-    update_verifier \
-    update_engine_sideload
+    update_engine_sideload \
+    update_verifier
+
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    $(LOCAL_PATH)
+
+# Properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hardware.bootctrl=mt6879 \
+    sys.usb.configfs=1 \
+    sys.usb.controller=11201000.usb0

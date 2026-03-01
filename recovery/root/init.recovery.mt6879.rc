@@ -1,4 +1,5 @@
-import /init.recovery.project.rc
+# Removed import of non-existent file
+# import /init.recovery.project.rc
 
 on init
     setprop sys.usb.configfs 1
