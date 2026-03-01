@@ -9,14 +9,14 @@
  $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
  $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
-# Inherit some common Omni stuff.
- $(call inherit-product, vendor/omni/config/common.mk)
+# Inherit some common TWRP stuff.
+ $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Inherit from manaus device
  $(call inherit-product, device/motorola/manaus/device.mk)
 
 PRODUCT_DEVICE := manaus
-PRODUCT_NAME := omni_manaus
+PRODUCT_NAME := twrp_manaus
 PRODUCT_BRAND := motorola
 PRODUCT_MODEL := motorola edge 40 neo
 PRODUCT_MANUFACTURER := motorola
