@@ -1,0 +1,9 @@
+# Vendor properties for recovery
+ro.hardware=mt6879
+ro.hardware.egl=meow
+ro.hardware.chipname=mt6879
+ro.board.platform=mt6879
+ro.product.device=manaus
+ro.product.model=motorola edge 40 neo
+ro.product.brand=motorola
+ro.product.manufacturer=motorola
