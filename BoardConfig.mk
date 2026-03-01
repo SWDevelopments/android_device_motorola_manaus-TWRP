@@ -173,3 +173,6 @@ TW_EXCLUDE_LPDUMP := true
 
 # Vendor boot modules (IMPORTANT for MediaTek)
 TW_LOAD_VENDOR_BOOT_MODULES := true
+
+# Vendor properties
+TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
