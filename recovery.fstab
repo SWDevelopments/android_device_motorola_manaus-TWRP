@@ -1,28 +1,71 @@
-# Logical Partitions (Dynamic/Super)
-/system                   erofs      system                             flags=display=System;logical;slotselect;backup=1
-/system_ext               erofs      system_ext                         flags=display=System Ext;logical;slotselect;backup=1
-/vendor                   erofs      vendor                             flags=display=Vendor;logical;slotselect;backup=1
-/product                  erofs      product                            flags=display=Product;logical;slotselect;backup=1
-/vendor_dlkm              erofs      vendor_dlkm                        flags=display=Vendor DLKM;logical;slotselect;backup=1
+# mount point       fstype    device                                              flags
 
-# Userdata & Metadata
-/metadata                 ext4       /dev/block/by-name/metadata        flags=display=Metadata;backup=1
-/data                     f2fs       /dev/block/by-name/userdata        flags=display=Data;backup=1;wipeingui;fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized;keydirectory=/metadata/vold/metadata_encryption
+# Android 14 A/B partitions
+/boot                emmc      /dev/block/by-name/boot                             flags=display=boot;slotselect;backup=1
+/init_boot           emmc      /dev/block/by-name/init_boot                        flags=display=init_boot;slotselect;backup=1
+/vendor_boot         emmc      /dev/block/by-name/vendor_boot                      flags=display=vendor_boot;slotselect;backup=1
+/dtbo                emmc      /dev/block/by-name/dtbo                             flags=display=dtbo;slotselect;backup=1
+/vbmeta              emmc      /dev/block/by-name/vbmeta                           flags=display=vbmeta;slotselect;backup=1
+/vbmeta_system       emmc      /dev/block/by-name/vbmeta_system                    flags=display=vbmeta_system;slotselect;backup=1
 
-# Boot Partitions
-/boot                     emmc       /dev/block/by-name/boot            flags=display=Boot;backup=1;flashimg=1;slotselect
-/vendor_boot              emmc       /dev/block/by-name/vendor_boot     flags=display=Vendor Boot;backup=1;flashimg=1;slotselect
-/dtbo                     emmc       /dev/block/by-name/dtbo            flags=display=DTBO;backup=1;flashimg=1;slotselect
+# Dynamic partitions
+/system              erofs     system                                              flags=display=system;logical;slotselect
+/system              ext4      system                                              flags=display=system;logical;slotselect
+/system_ext          erofs     system_ext                                          flags=display=system_ext;logical;slotselect
+/vendor              erofs     vendor                                              flags=display=vendor;logical;slotselect
+/product             erofs     product                                             flags=display=product;logical;slotselect
+/vendor_dlkm         erofs     vendor_dlkm                                         flags=display=vendor_dlkm;logical;slotselect
 
-# VBMeta
-/vbmeta                   emmc       /dev/block/by-name/vbmeta          flags=display=VBMeta;backup=1;flashimg=1;slotselect
-/vbmeta_system            emmc       /dev/block/by-name/vbmeta_system   flags=display=VBMeta System;backup=1;flashimg=1;slotselect
+# Standard partitions
+/metadata            ext4      /dev/block/by-name/metadata                         flags=display=metadata
+/data                f2fs      /dev/block/by-name/userdata                         flags=display=data;encryptable=footer;length=-16384
 
-# MediaTek Partitions
-/nvram                    emmc       /dev/block/by-name/nvram           flags=display=NVRAM;backup=1;flashimg=1
-/mnt/vendor/persist       ext4       /dev/block/by-name/persist         flags=display=Persist;backup=1
-/logo                     emmc       /dev/block/by-name/logo            flags=display=Logo;backup=1;flashimg=1
+# Vendor/Protected partitions
+/mnt/vendor/protect_f ext4     /dev/block/by-name/protect1                         flags=display=protect_f
+/mnt/vendor/protect_s ext4     /dev/block/by-name/protect2                         flags=display=protect_s
+/mnt/vendor/nvdata   ext4      /dev/block/by-name/nvdata                           flags=display=nvdata
+/mnt/vendor/nvcfg    ext4      /dev/block/by-name/nvcfg                            flags=display=nvcfg
+/mnt/vendor/persist  ext4      /dev/block/by-name/persist                          flags=display=persist
+/mnt/product/persist ext4      /dev/block/by-name/prodpersist                      flags=display=prodpersist
 
-# Removable Storage
-/external_sd              vfat       /dev/block/mmcblk1p1               flags=display=SD Card;storage;wipeingui;removable
-/usb_otg                  vfat       /devices/platform/usb_xhci*        flags=display=USB OTG;storage;wipeingui;removable
+# MediaTek partitions
+/mnt/vendor/tzapp    emmc      /dev/block/by-name/tzapp_a                          flags=display=tzapp;slotselect
+/tee                 emmc      /dev/block/by-name/tee_a                            flags=display=tee;slotselect
+
+# USB/External storage
+auto                 vfat      /devices/platform/usb_xhci*                         flags=display=auto
+auto                 vfat      /devices/platform/soc/11201000.usb0/11200000.xhci*  flags=display=auto
+
+# EMMC partitions (non-slotted)
+/persistent          emmc      /dev/block/by-name/frp                              flags=display=persistent
+/nvram               emmc      /dev/block/by-name/nvram                            flags=display=nvram
+/proinfo             emmc      /dev/block/by-name/proinfo                          flags=display=proinfo
+/bootloader          emmc      /dev/block/by-name/lk_a                             flags=display=bootloader;slotselect
+/para                emmc      /dev/block/by-name/para                             flags=display=para
+/misc                emmc      /dev/block/by-name/misc                             flags=display=misc
+/logo                emmc      /dev/block/by-name/logo_a                           flags=display=logo;slotselect
+/expdb               emmc      /dev/block/by-name/expdb                            flags=display=expdb
+/seccfg              emmc      /dev/block/by-name/seccfg                           flags=display=seccfg
+/scp                 emmc      /dev/block/by-name/scp_a                            flags=display=scp;slotselect
+/sspm                emmc      /dev/block/by-name/sspm_a                           flags=display=sspm;slotselect
+/dpm                 emmc      /dev/block/by-name/dpm_a                            flags=display=dpm;slotselect
+/mcupm               emmc      /dev/block/by-name/mcupm_a                          flags=display=mcupm;slotselect
+/efuse               emmc      /dev/block/by-name/efuse                            flags=display=efuse
+/md1img              emmc      /dev/block/by-name/md1img_a                         flags=display=md1img;slotselect
+/gz                  emmc      /dev/block/by-name/gz_a                             flags=display=gz;slotselect
+/spmfw               emmc      /dev/block/by-name/spmfw_a                          flags=display=spmfw;slotselect
+/audio_dsp           emmc      /dev/block/by-name/audio_dsp_a                      flags=display=audio_dsp;slotselect
+/pi_img              emmc      /dev/block/by-name/pi_img_a                         flags=display=pi_img;slotselect
+/boot_para           emmc      /dev/block/by-name/boot_para                        flags=display=boot_para
+/odmdtbo             emmc      /dev/block/by-name/odmdtbo                          flags=display=odmdtbo
+/otp                 emmc      /dev/block/by-name/otp                              flags=display=otp
+
+# Additional MediaTek partitions
+/apusys              emmc      /dev/block/by-name/apusys_a                         flags=display=apusys;slotselect
+/ccu                 emmc      /dev/block/by-name/ccu_a                            flags=display=ccu;slotselect
+/connsys_bt          emmc      /dev/block/by-name/connsys_bt_a                     flags=display=connsys_bt;slotselect
+/connsys_wifi        emmc      /dev/block/by-name/connsys_wifi_a                   flags=display=connsys_wifi;slotselect
+/gpueb               emmc      /dev/block/by-name/gpueb_a                          flags=display=gpueb;slotselect
+/mcf_ota             emmc      /dev/block/by-name/mcf_ota_a                        flags=display=mcf_ota;slotselect
+/mvpu_algo           emmc      /dev/block/by-name/mvpu_algo_a                      flags=display=mvpu_algo;slotselect
+/vcp                 emmc      /dev/block/by-name/vcp_a                            flags=display=vcp;slotselect

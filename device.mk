@@ -1,6 +1,7 @@
 #
 # Copyright (C) 2024 The Android Open Source Project
 # Copyright (C) 2024 SebaUbuntu's TWRP device tree generator
+# Updated for motorola edge 40 neo (manaus) - Android 14
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -14,24 +15,32 @@ AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
 
-# Boot control HAL (use 1.2 for Android 13+)
+# Boot control HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-service \
     android.hardware.boot@1.2-impl \
+    android.hardware.boot@1.2-service
+
+PRODUCT_PACKAGES += \
+    bootctrl.mt6879
+
+PRODUCT_STATIC_BOOT_CONTROL_HAL := \
     bootctrl.mt6879 \
-    bootctrl \
+    libgptutils \
+    libz \
+    libcutils
+
+PRODUCT_PACKAGES += \
     otapreopt_script \
     cppreopts.sh \
     update_engine \
-    update_engine_sideload \
-    update_verifier
+    update_verifier \
+    update_engine_sideload
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
 
-# Properties
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.hardware.bootctrl=mt6879 \
-    sys.usb.configfs=1 \
-    sys.usb.controller=11201000.usb0
+# Additional packages for Android 14
+PRODUCT_PACKAGES += \
+    linkerconfig \
+    recoverysnapshot

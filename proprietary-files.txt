@@ -1,0 +1,115 @@
+# Proprietary files for motorola edge 40 neo (manaus)
+# Android 14
+# Extract from stock firmware
+
+# Boot control
+vendor/bin/hw/android.hardware.boot@1.2-service.mt6879
+vendor/lib/hw/android.hardware.boot@1.2-impl.mt6879.so
+vendor/lib64/hw/android.hardware.boot@1.2-impl.mt6879.so
+
+# Keymaster
+vendor/bin/hw/android.hardware.keymaster@4.1-service.mt6879
+vendor/lib/hw/android.hardware.keymaster@4.1-impl.mt6879.so
+vendor/lib64/hw/android.hardware.keymaster@4.1-impl.mt6879.so
+
+# Gatekeeper
+vendor/bin/hw/android.hardware.gatekeeper@1.0-service.mt6879
+vendor/lib/hw/android.hardware.gatekeeper@1.0-impl.mt6879.so
+vendor/lib64/hw/android.hardware.gatekeeper@1.0-impl.mt6879.so
+
+# Health
+vendor/bin/hw/android.hardware.health@2.1-service.mt6879
+vendor/lib/hw/android.hardware.health@2.1-impl.mt6879.so
+vendor/lib64/hw/android.hardware.health@2.1-impl.mt6879.so
+
+# Lights
+vendor/lib/hw/android.hardware.light@2.0-impl.mt6879.so
+vendor/lib64/hw/android.hardware.light@2.0-impl.mt6879.so
+
+# Power
+vendor/bin/hw/android.hardware.power-service.mt6879
+vendor/lib/hw/android.hardware.power@1.2-impl.mt6879.so
+vendor/lib64/hw/android.hardware.power@1.2-impl.mt6879.so
+
+# Thermal
+vendor/bin/hw/android.hardware.thermal@2.0-service.mt6879
+vendor/lib/hw/android.hardware.thermal@2.0-impl.mt6879.so
+vendor/lib64/hw/android.hardware.thermal@2.0-impl.mt6879.so
+
+# Vibrator
+vendor/bin/hw/android.hardware.vibrator-service.mt6879
+vendor/lib/hw/android.hardware.vibrator@1.2-impl.mt6879.so
+vendor/lib64/hw/android.hardware.vibrator@1.2-impl.mt6879.so
+
+# Biometrics (fingerprint)
+vendor/bin/hw/android.hardware.biometrics.fingerprint@2.3-service.mt6879
+vendor/lib/hw/android.hardware.biometrics.fingerprint@2.3-impl.mt6879.so
+vendor/lib64/hw/android.hardware.biometrics.fingerprint@2.3-impl.mt6879.so
+
+# DRM
+vendor/bin/hw/android.hardware.drm@1.3-service.widevine
+vendor/lib/libwvhidl.so
+vendor/lib64/libwvhidl.so
+
+# Media
+vendor/lib/libmtk_mmutils.so
+vendor/lib64/libmtk_mmutils.so
+vendor/lib/libmtkplayer.so
+vendor/lib64/libmtkplayer.so
+
+# Camera
+vendor/lib/libcamera_metadata.so
+vendor/lib64/libcamera_metadata.so
+vendor/lib/hw/camera.provider@2.7-impl.mt6879.so
+vendor/lib64/hw/camera.provider@2.7-impl.mt6879.so
+
+# WiFi
+vendor/bin/hw/android.hardware.wifi@1.6-service.mt6879
+vendor/lib/hw/android.hardware.wifi@1.6-impl.mt6879.so
+vendor/lib64/hw/android.hardware.wifi@1.6-impl.mt6879.so
+vendor/firmware/wifi/
+vendor/etc/wifi/
+
+# Bluetooth
+vendor/bin/hw/android.hardware.bluetooth@1.1-service.mt6879
+vendor/lib/hw/android.hardware.bluetooth@1.1-impl.mt6879.so
+vendor/lib64/hw/android.hardware.bluetooth@1.1-impl.mt6879.so
+vendor/firmware/bluetooth/
+
+# Sensors
+vendor/bin/hw/android.hardware.sensors@2.1-service.mt6879
+vendor/lib/hw/android.hardware.sensors@2.1-impl.mt6879.so
+vendor/lib64/hw/android.hardware.sensors@2.1-impl.mt6879.so
+
+# Audio
+vendor/lib/libaudiohal@common.so
+vendor/lib64/libaudiohal@common.so
+vendor/lib/hw/android.hardware.audio@7.1-impl.mt6879.so
+vendor/lib64/hw/android.hardware.audio@7.1-impl.mt6879.so
+vendor/etc/audio/
+
+# GNSS/GPS
+vendor/bin/hw/android.hardware.gnss@2.1-service.mt6879
+vendor/lib/hw/android.hardware.gnss@2.1-impl.mt6879.so
+vendor/lib64/hw/android.hardware.gnss@2.1-impl.mt6879.so
+
+# RIL (Radio Interface Layer)
+vendor/lib/libril.so
+vendor/lib64/libril.so
+vendor/lib/librilutils.so
+vendor/lib64/librilutils.so
+vendor/lib/libmtkril.so
+vendor/lib64/libmtkril.so
+
+# Touch
+vendor/lib/hw/android.hardware.input.processor@1.0-impl.mt6879.so
+vendor/lib64/hw/android.hardware.input.processor@1.0-impl.mt6879.so
+
+# Display
+vendor/lib/libgui_vendor.so
+vendor/lib64/libgui_vendor.so
+vendor/lib/libgralloc.mtk.so
+vendor/lib64/libgralloc.mtk.so
+
+# Modem/firmware
+vendor/firmware/modem/
