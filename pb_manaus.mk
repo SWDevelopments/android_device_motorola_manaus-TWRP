@@ -30,8 +30,6 @@ PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    TARGET_DEVICE="manaus" \
-    TARGET_PRODUCT="manaus" \
-    PRIVATE_BUILD_DESC="manaus-user 14 U1TM34.100-34-1 01c8b release-keys"
+    PRIVATE_BUILD_DESC="manaus_g_sys-user 14 U1TMS34.107-34-4-3 7613c3-cb438c release-keys"
 
-BUILD_FINGERPRINT := motorola/manaus/manaus:14/U1TM34.100-34-1/01c8b:user/release-keys
+BUILD_FINGERPRINT := motorola/manaus_g_sys/manaus:14/U1TMS34.107-34-4-3/7613c3-cb438c:user/release-keys
