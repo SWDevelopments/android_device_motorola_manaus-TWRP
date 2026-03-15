@@ -23,10 +23,7 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl \
     android.hardware.boot@1.2-service \
     bootctrl.mt6879 \
-    bootctrl.mt6879.recovery
-
-PRODUCT_STATIC_BOOT_CONTROL_HAL := \
-    bootctrl.mt6879 \
+    bootctrl.mt6879.recovery \
     libgptutils \
     libz \
     libcutils
