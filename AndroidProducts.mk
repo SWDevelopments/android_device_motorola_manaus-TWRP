@@ -9,6 +9,6 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/pb_manaus.mk
 
 COMMON_LUNCH_CHOICES := \
-    omni_manaus-trunk-eng \
-    twrp_manaus-trunk-eng \
-    pb_manaus-trunk-eng \
+    omni_manaus-ap2a-eng \
+    twrp_manaus-ap2a-eng \
+    pb_manaus-ap2a-eng \
