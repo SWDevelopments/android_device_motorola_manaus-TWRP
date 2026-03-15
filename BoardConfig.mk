@@ -33,6 +33,7 @@ AB_OTA_PARTITIONS += \
 BOARD_USES_RECOVERY_AS_BOOT := false
 BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
+BOARD_BUILD_VENDOR_BOOT_IMAGE := true
 
 ##============================================================================
 ## ARCHITECTURE
