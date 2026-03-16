@@ -11,12 +11,6 @@ DEVICE_PATH := device/motorola/manaus
 ALLOW_MISSING_DEPENDENCIES := true
 
 # ==================================================
-# GKI Configuration (Android 13+ Architecture)
-# ==================================================
-BOARD_USES_GKI := true
-BOARD_RAMDISK_USE_LZ4 := true
-
-# ==================================================
 # A/B and Virtual A/B Configuration
 # ==================================================
 AB_OTA_UPDATER := true
@@ -37,15 +31,11 @@ AB_OTA_PARTITIONS += \
 TARGET_VIRTUAL_AB_OTA := true
 
 # ==================================================
-# Recovery Configuration for GKI/VAB devices
+# Recovery Configuration
+# For Android 12.1 recovery builds, use recovery in boot
 # ==================================================
-# NO dedicated recovery partition - use vendor_boot
-BOARD_BUILD_RECOVERY_IMAGE := false
-
-# Build vendor_boot image with recovery ramdisk
-BOARD_BUILD_VENDOR_BOOT_IMAGE := true
-BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
-BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
+BOARD_USES_RECOVERY_AS_BOOT := true
+BOARD_BUILD_RECOVERY_IMAGE := true
 
 # ==================================================
 # Architecture
@@ -92,11 +82,8 @@ BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_KERNEL_IMAGE_NAME := Image
 
-# DTB in vendor_boot for GKI devices
-BOARD_INCLUDE_DTB_IN_BOOTIMG := false
-
-# Vendor boot header version
-BOARD_VENDOR_BOOT_HEADER_VERSION := 4
+# DTB
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 
 # ==================================================
 # Kernel - Prebuilt (for recovery only)
@@ -108,20 +95,16 @@ TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 # ==================================================
 # Partition Sizes (from device)
 # ==================================================
-BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
+BOARD_FLASH_BLOCK_SIZE := 262144
 
-# Boot partitions
-BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864        # 64 MB
-BOARD_VENDOR_BOOT_PARTITION_SIZE := 67108864      # 64 MB
-BOARD_INIT_BOOT_PARTITION_SIZE := 8388608         # 8 MB
-BOARD_DTBO_PARTITION_SIZE := 8388608              # 8 MB
-BOARD_VBMETA_PARTITION_SIZE := 8388608            # 8 MB
+# Boot partition
+BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
 
 # Super partition (dynamic partitions)
 BOARD_SUPER_PARTITION_SIZE := 7507804160
 BOARD_SUPER_PARTITION_GROUPS := motorola_dynamic_partitions
 BOARD_MOTOROLA_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext vendor product vendor_dlkm
-BOARD_MOTOROLA_DYNAMIC_PARTITIONS_SIZE := 7503611904 # BOARD_SUPER_PARTITION_SIZE - 4MB overhead
+BOARD_MOTOROLA_DYNAMIC_PARTITIONS_SIZE := 7503611904
 
 # Filesystem types
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -143,7 +126,6 @@ TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
-# Recovery fstab
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 
 # ==================================================
@@ -171,12 +153,8 @@ TW_INCLUDE_REPACKTOOLS := true
 TW_NO_REBOOT_BOOTLOADER := false
 TW_HAS_DOWNLOAD_MODE := false
 
-# For building with minimal manifest
 TW_INCLUDE_CRYPTO := false
 TW_INCLUDE_FBE_METADATA_DECRYPT := false
 TW_INCLUDE_LEGACY_CRYPTO := false
 
-# ==================================================
-# Proprietary files handling
-# ==================================================
 TARGET_SYSTEM_PROP := $(DEVICE_PATH)/system.prop
