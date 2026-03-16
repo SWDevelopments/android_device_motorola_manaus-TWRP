@@ -12,6 +12,8 @@ DEVICE_PATH := device/motorola/manaus
 ## BUILD SETTINGS
 ##============================================================================
 ALLOW_MISSING_DEPENDENCIES := true
+BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 
 ##============================================================================
 ## A/B PARTITION CONFIGURATION
@@ -30,13 +32,21 @@ AB_OTA_PARTITIONS += \
     vendor \
     vendor_dlkm
 
-# GKI Recovery Configuration for OrangeFox
-# For vendor_boot recovery, OrangeFox handles the packaging
+##============================================================================
+## GKI RECOVERY CONFIGURATION
+##============================================================================
+# Generic Kernel Image (GKI) configuration
+BOARD_USES_GENERIC_KERNEL_IMAGE := true
+TARGET_NO_KERNEL := true
+TARGET_NO_RECOVERY := true
+
+# Recovery lives in vendor_boot for GKI devices
 BOARD_USES_RECOVERY_AS_BOOT := false
-# DO NOT set these - OrangeFox handles vendor_boot packaging automatically
-# BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
-# BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
-# BOARD_BUILD_VENDOR_BOOT_IMAGE := true
+BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
+TW_LOAD_VENDOR_BOOT_MODULES := true
+
+# Ramdisk compression
+BOARD_RAMDISK_USE_LZ4 := true
 
 ##============================================================================
 ## ARCHITECTURE
@@ -69,22 +79,28 @@ TARGET_SCREEN_DENSITY := 400
 ##============================================================================
 ## KERNEL
 ##============================================================================
-BOARD_BOOTIMG_HEADER_VERSION := 4
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
 BOARD_KERNEL_BASE := 0x3fff8000
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 loglevel=4
 BOARD_KERNEL_PAGESIZE := 4096
+BOARD_KERNEL_OFFSET := 0x00008000
 BOARD_RAMDISK_OFFSET := 0x26f08000
-BOARD_KERNEL_TAGS_OFFSET := 0x07c88000
-BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
-BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
-BOARD_KERNEL_IMAGE_NAME := Image
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_TAGS_OFFSET := 0x07c88000
+BOARD_BOOT_HEADER_VERSION := 4
+BOARD_DTB_OFFSET := 0x07c88000
 
-# Prebuilt kernel
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_TAGS_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
+
+# Prebuilt kernel/dtb
 TARGET_FORCE_PREBUILT_KERNEL := true
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 
 ##============================================================================
 ## PARTITION SIZES (VERIFIED FROM DEVICE - ANDROID 15)
@@ -125,6 +141,7 @@ BOARD_MOTOROLA_DYNAMIC_PARTITIONS_SIZE := 7505707008
 ##============================================================================
 TARGET_BOARD_PLATFORM := mt6879
 TARGET_BOARD_PLATFORM_GPU := Mali-G610 MC3
+BOARD_USES_MTK_HARDWARE := true
 
 ##============================================================================
 ## RECOVERY
@@ -144,6 +161,7 @@ BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
 ##============================================================================
 PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
+BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 PLATFORM_VERSION := 15
 PLATFORM_VERSION_LAST_STABLE := 15
 
