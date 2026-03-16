@@ -31,14 +31,11 @@ AB_OTA_PARTITIONS += \
 TARGET_VIRTUAL_AB_OTA := true
 
 # ==================================================
-# Recovery Configuration for GKI/VAB devices
-# Recovery ramdisk goes in vendor_boot, NOT boot
+# Recovery Configuration
+# Recovery ramdisk goes in boot.img for PBRP builds
+# Flash resulting boot.img to boot partition for recovery
 # ==================================================
-BOARD_BUILD_VENDOR_BOOT_IMAGE := true
-BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
-BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
-BOARD_USES_RECOVERY_AS_BOOT := false
-BOARD_BUILD_RECOVERY_IMAGE := false
+BOARD_USES_RECOVERY_AS_BOOT := true
 
 # ==================================================
 # Architecture
@@ -85,7 +82,7 @@ BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_KERNEL_IMAGE_NAME := Image
 
-# DTB configuration
+# DTB configuration - use directory for prebuilt dtb
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt
 
@@ -102,15 +99,6 @@ BOARD_FLASH_BLOCK_SIZE := 262144
 
 # Boot partition
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
-
-# Vendor Boot partition
-BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
-
-# Init Boot partition
-BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
-
-# DTBO partition
-BOARD_DTBOIMG_PARTITION_SIZE := 8388608
 
 # Super partition (dynamic partitions)
 BOARD_SUPER_PARTITION_SIZE := 7507804160
