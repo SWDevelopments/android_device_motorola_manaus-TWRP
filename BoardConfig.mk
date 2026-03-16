@@ -36,9 +36,14 @@ AB_OTA_PARTITIONS += \
 # Virtual A/B support
 TARGET_VIRTUAL_AB_OTA := true
 
-# Recovery is in vendor_boot for GKI devices (NOT in boot!)
-# NO dedicated recovery partition exists
+# ==================================================
+# Recovery Configuration for GKI/VAB devices
+# ==================================================
+# NO dedicated recovery partition - use vendor_boot
 BOARD_BUILD_RECOVERY_IMAGE := false
+
+# Build vendor_boot image with recovery ramdisk
+BOARD_BUILD_VENDOR_BOOT_IMAGE := true
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
 BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
 
@@ -146,10 +151,6 @@ TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 # ==================================================
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
-BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
-BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 
 # ==================================================
 # Hack: prevent anti rollback
@@ -179,9 +180,3 @@ TW_INCLUDE_LEGACY_CRYPTO := false
 # Proprietary files handling
 # ==================================================
 TARGET_SYSTEM_PROP := $(DEVICE_PATH)/system.prop
-
-# ==================================================
-# Soong namespaces
-# ==================================================
-SOONG_CONFIG_NAMESPACES += MOTOROLA_MANAUS
-SOONG_CONFIG_MOTOROLA_MANAUS := true
