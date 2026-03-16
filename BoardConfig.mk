@@ -1,6 +1,6 @@
 #
-# Copyright (C) 2026 The Android Open Source Project
-# Copyright (C) 2026 SebaUbuntu's TWRP device tree generator
+# Copyright (C) 2024 The Android Open Source Project
+# Copyright (C) 2024 Recovery Device Tree Generator
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -10,23 +10,45 @@ DEVICE_PATH := device/motorola/manaus
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
-# A/B
+# ==================================================
+# GKI Configuration (Android 13+ Architecture)
+# ==================================================
+BOARD_USES_GKI := true
+BOARD_RAMDISK_USE_LZ4 := true
+
+# ==================================================
+# A/B and Virtual A/B Configuration
+# ==================================================
 AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
-    vendor_dlkm \
-    product \
     boot \
+    vendor_boot \
+    init_boot \
+    dtbo \
+    vbmeta \
+    vbmeta_system \
     vendor \
+    product \
     system \
     system_ext \
-    vbmeta_system
-BOARD_USES_RECOVERY_AS_BOOT := true
+    vendor_dlkm
 
+# Virtual A/B support
+TARGET_VIRTUAL_AB_OTA := true
+
+# Recovery is in vendor_boot for GKI devices (NOT in boot!)
+# NO dedicated recovery partition exists
+BOARD_BUILD_RECOVERY_IMAGE := false
+BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
+BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
+
+# ==================================================
 # Architecture
+# ==================================================
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_ABI2 := 
+TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := generic
 TARGET_CPU_VARIANT_RUNTIME := cortex-a55
 
@@ -40,14 +62,20 @@ TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
 # APEX
 DEXPREOPT_GENERATE_APEX_IMAGE := true
 
+# ==================================================
 # Bootloader
+# ==================================================
 TARGET_BOOTLOADER_BOARD_NAME := manaus
 TARGET_NO_BOOTLOADER := true
 
+# ==================================================
 # Display
+# ==================================================
 TARGET_SCREEN_DENSITY := 400
 
-# Kernel
+# ==================================================
+# Kernel Configuration
+# ==================================================
 BOARD_BOOTIMG_HEADER_VERSION := 4
 BOARD_KERNEL_BASE := 0x3fff8000
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 loglevel=4
@@ -58,57 +86,102 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_KERNEL_IMAGE_NAME := Image
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-TARGET_KERNEL_CONFIG := manaus_defconfig
-TARGET_KERNEL_SOURCE := kernel/motorola/manaus
 
-# Kernel - prebuilt
+# DTB in vendor_boot for GKI devices
+BOARD_INCLUDE_DTB_IN_BOOTIMG := false
+
+# Vendor boot header version
+BOARD_VENDOR_BOOT_HEADER_VERSION := 4
+
+# ==================================================
+# Kernel - Prebuilt (for recovery only)
+# ==================================================
 TARGET_FORCE_PREBUILT_KERNEL := true
-ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
-BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
-BOARD_INCLUDE_DTB_IN_BOOTIMG := 
-endif
 
-# Partitions
+# ==================================================
+# Partition Sizes (from device)
+# ==================================================
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
-BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
+
+# Boot partitions
+BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864        # 64 MB
+BOARD_VENDOR_BOOT_PARTITION_SIZE := 67108864      # 64 MB
+BOARD_INIT_BOOT_PARTITION_SIZE := 8388608         # 8 MB
+BOARD_DTBO_PARTITION_SIZE := 8388608              # 8 MB
+BOARD_VBMETA_PARTITION_SIZE := 8388608            # 8 MB
+
+# Super partition (dynamic partitions)
+BOARD_SUPER_PARTITION_SIZE := 7507804160
+BOARD_SUPER_PARTITION_GROUPS := motorola_dynamic_partitions
+BOARD_MOTOROLA_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext vendor product vendor_dlkm
+BOARD_MOTOROLA_DYNAMIC_PARTITIONS_SIZE := 7503611904 # BOARD_SUPER_PARTITION_SIZE - 4MB overhead
+
+# Filesystem types
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
-BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_VENDOR := vendor
-BOARD_SUPER_PARTITION_SIZE := 9126805504 # TODO: Fix hardcoded value
-BOARD_SUPER_PARTITION_GROUPS := motorola_dynamic_partitions
-BOARD_MOTOROLA_DYNAMIC_PARTITIONS_PARTITION_LIST := system system system_ext vendor product vendor_dlkm
-BOARD_MOTOROLA_DYNAMIC_PARTITIONS_SIZE := 9122611200 # TODO: Fix hardcoded value
 
+# ==================================================
 # Platform
+# ==================================================
 TARGET_BOARD_PLATFORM := mt6879
+BOARD_VENDOR := motorola
 
-# Recovery
+# ==================================================
+# Recovery Configuration
+# ==================================================
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
-# Security patch level
-VENDOR_SECURITY_PATCH := 2021-08-01
+# Recovery fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 
+# ==================================================
 # Verified Boot
+# ==================================================
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 
+# ==================================================
 # Hack: prevent anti rollback
+# ==================================================
 PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
 
-# TWRP Configuration
+# ==================================================
+# TWRP/OFRP/PBRP Configuration
+# ==================================================
 TW_THEME := portrait_hdpi
 TW_EXTRA_LANGUAGES := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 TW_INCLUDE_REPACKTOOLS := true
+TW_NO_REBOOT_BOOTLOADER := false
+TW_HAS_DOWNLOAD_MODE := false
+
+# For building with minimal manifest
+TW_INCLUDE_CRYPTO := false
+TW_INCLUDE_FBE_METADATA_DECRYPT := false
+TW_INCLUDE_LEGACY_CRYPTO := false
+
+# ==================================================
+# Proprietary files handling
+# ==================================================
+TARGET_SYSTEM_PROP := $(DEVICE_PATH)/system.prop
+
+# ==================================================
+# Soong namespaces
+# ==================================================
+SOONG_CONFIG_NAMESPACES += MOTOROLA_MANAUS
+SOONG_CONFIG_MOTOROLA_MANAUS := true

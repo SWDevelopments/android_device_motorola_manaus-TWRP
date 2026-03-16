@@ -1,0 +1,20 @@
+#
+# Copyright (C) 2024 The Android Open Source Project
+# Copyright (C) 2024 Recovery Device Tree Generator
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Platform
+ro.board.platform=mt6879
+ro.hardware=mt6879
+ro.hardware.chipname=mt6879
+ro.soc.manufacturer=MTK
+ro.soc.model=MT6879
+
+# Boot
+ro.build.bootimage=boot
+ro.vendor_boot.vendor=mt6879
+
+# GKI
+ro.kernel.gki=1
