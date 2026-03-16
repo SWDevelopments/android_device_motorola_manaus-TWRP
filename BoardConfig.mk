@@ -30,10 +30,13 @@ AB_OTA_PARTITIONS += \
     vendor \
     vendor_dlkm
 
+# GKI Recovery Configuration for OrangeFox
+# For vendor_boot recovery, OrangeFox handles the packaging
 BOARD_USES_RECOVERY_AS_BOOT := false
-BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
-BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
-BOARD_BUILD_VENDOR_BOOT_IMAGE := true
+# DO NOT set these - OrangeFox handles vendor_boot packaging automatically
+# BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
+# BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
+# BOARD_BUILD_VENDOR_BOOT_IMAGE := true
 
 ##============================================================================
 ## ARCHITECTURE
