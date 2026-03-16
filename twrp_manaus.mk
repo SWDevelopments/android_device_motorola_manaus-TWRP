@@ -38,9 +38,3 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 # Build fingerprint
 PRODUCT_BUILD_PROP_OVERRIDES += \
     BUILD_FINGERPRINT="motorola/manaus_g_sys/manaus:15/V1TMS35H.3-45-3-2-1/8f2efc-0a4cd7:user/release-keys"
-
-##============================================================================
-## API LEVEL
-##============================================================================
-PRODUCT_SHIPPING_API_LEVEL := 35
-PRODUCT_TARGET_VNDK_VERSION := 35
