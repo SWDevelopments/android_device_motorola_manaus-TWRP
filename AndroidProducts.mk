@@ -1,5 +1,7 @@
 #
-# Copyright (C) 2025 The Android Open Source Project
+# Copyright (C) 2026 The Android Open Source Project
+# Copyright (C) 2026 SebaUbuntu's TWRP device tree generator
+#
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -9,6 +11,6 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/pb_manaus.mk
 
 COMMON_LUNCH_CHOICES := \
-    omni_manaus-ap2a-eng \
-    twrp_manaus-ap2a-eng \
-    pb_manaus-ap2a-eng \
+    omni_manaus-eng \
+    twrp_manaus-eng \
+    pb_manaus-eng
